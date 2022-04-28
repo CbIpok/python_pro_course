@@ -11,7 +11,7 @@ class TaskChecker:
 
     def data_cards_gen(self):
         a = []
-        N = random.randint(1, 500000)
+        N = random.randint(1, 100000)
         if N == 1:
             return N, a, 1
         else:
