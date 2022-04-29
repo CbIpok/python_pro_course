@@ -90,6 +90,14 @@ class TaskChecker:
             if self.task.run(2) != self.fibb_cycle(2):
                 return False
             return True
+        if self.task.name == "most_freq":
+            if self.task.run(1, ["apple orange banana banana orange"]) != "banana":
+                return False
+            if self.task.run(3, ["q w e r t y u i o p", "a s d f g h j k l", "z x c v b n m"]) != "a":
+                return False
+            if self.task.run(1, ["Death there mirth way the noisy merit. Piqued shy spring nor six though mutual living ask extent. Replying of dashwood advanced ladyship smallest disposal or. Attempt offices own improve now see. Called person are around county talked her esteem. Those fully these way nay thing seems."]) != self.most_freq_check(1, ["Death there mirth way the noisy merit. Piqued shy spring nor six though mutual living ask extent. Replying of dashwood advanced ladyship smallest disposal or. Attempt offices own improve now see. Called person are around county talked her esteem. Those fully these way nay thing seems."]):
+                return False
+            return True
 
     # call func
     def run(self):
