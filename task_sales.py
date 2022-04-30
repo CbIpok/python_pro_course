@@ -1,12 +1,11 @@
 from collections import defaultdict
-from sys import stdin
 
 class TaskSales:
     def __init__(self):
         self.name = "sales"
-    def run(self, ):
+    def run(self, data):
         clients = defaultdict(lambda: defaultdict(int))
-        for line in stdin.readlines():
+        for line in data:
             client, thing, value = line.split()
             clients[client][thing] += int(value)
 

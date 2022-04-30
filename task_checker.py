@@ -155,7 +155,7 @@ class TaskChecker:
                 return False
             return True
         if self.task.name == "sales":
-            
+
             return True
 
     # call func
@@ -203,7 +203,8 @@ class TaskChecker:
                 self.task.run(10000, self.data_freq_check())
                 print(f"bench {i}/100")
         if self.task.name == "sales":
-            for i in range(10000):
+            for i in range(100):
                 self.task.run()
+                print(f"bench {i}/100")
             pass
         return time.time() - start
