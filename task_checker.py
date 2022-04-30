@@ -3,22 +3,39 @@ from math import factorial
 import time
 from collections import Counter
 from collections import defaultdict
-from sys import stdin
-
 
 class TaskChecker:
     def __init__(self, task):
         self.task = task
         self.data_cards = []
         self.data_most_freq = []
-
+        self.data_sales = []
+        self.data_freq_check = []
     # pregen func
-    def data_freq_check(self):
+
+    def data_gen_sales(self):
+        strings = []
+        for i in range(1000000):
+            strings.append(str(random.randint(1, 10)) + " " + str(random.randint(1, 10)) + " " + str(random.randint(1, 100000)))
+        self.data_sales = strings
+
+    def check_sales(self, data):
+        clients = defaultdict(lambda: defaultdict(int))
+        for line in data:
+            client, thing, value = line.split()
+            clients[client][thing] += int(value)
+        ans = []
+        for client in sorted(clients):
+            ans.append(str(client + ':'))
+            for thing in sorted(clients[client]):
+                ans.append(str(thing) + " " + str(clients[client][thing]))
+        return ans
+
+    def data_gen_freq_check(self):
         output = []
         for i in range(10000):
-            output.append(
-                "ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf dfgqwe asdfsdfg asd qwe rsdf aasd sf dfasdkqwoe asasdasd aiaiai ai ai ai oi oi oi oi oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf dfgqwe asdfsdfg asd qwe rsdf aasd sf dfasdkqwoe asasdasd aiaiai ai ai ai oi oi oi oi oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf dfgqwe asdfsdfg asd qwe rsdf aasd sf dfasdkqwoe asasdasd aiaiai ai ai ai oi oi oi oi oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf dfgqwe asdfsdfg asd qwe rsdf aasd sf dfasdkqwoe asasdasd aiaiai ai ai ai oi oi oi oi oi oi oi oi oi oi oi ")
-        return output
+            output.append("ai ai ai ai ai ai ai ai ai oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf ai ai ai ai ai ai ai ai ai oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf ai ai ai ai ai ai ai ai ai oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf ai ai ai ai ai ai ai ai ai oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf ai ai ai ai ai ai ai ai ai oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf ai ai ai ai ai ai ai ai ai oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf dfgqwe asdfsdfg asd qwe rsdf aasd sf dfasdkqwoe asasdasd aiaiai ai ai ai oi oi oi oi oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd ai ai ai oi oi oi oi oi oi oi oi oi oi oi ")
+        self.data_freq_check = output
 
     def sale(self):
         pass
@@ -155,7 +172,13 @@ class TaskChecker:
                 return False
             return True
         if self.task.name == "sales":
-
+            if self.task.run(["Ivanov paper 10", "Petrov pens 5", "Ivanov marker 3", "Ivanov paper 7", "Petrov envelope 20", "Ivanov envelope 5"]) != ["Ivanov:", "envelope 5", "marker 3", "paper 17", "Petrov:", "envelope 20", "pens 5"]:
+                print(self.task.run(["Ivanov paper 10", "Petrov pens 5", "Ivanov marker 3", "Ivanov paper 7", "Petrov envelope 20", "Ivanov envelope 5"]))
+                return False
+            if self.task.run(["Ivanov aaa 1", "Petrov aaa 2", "Sidorov aaa 3", "Ivanov aaa 6", "Petrov aaa 7", "Sidorov aaa 8", "Ivanov bbb 3", "Petrov bbb 7", "Sidorov aaa 345", "Ivanov ccc 45", "Petrov ddd 34", "Ziborov eee 234", "Ivanov aaa 45"]) != self.check_sales(["Ivanov aaa 1", "Petrov aaa 2", "Sidorov aaa 3", "Ivanov aaa 6", "Petrov aaa 7", "Sidorov aaa 8", "Ivanov bbb 3", "Petrov bbb 7", "Sidorov aaa 345", "Ivanov ccc 45", "Petrov ddd 34", "Ziborov eee 234", "Ivanov aaa 45"]):
+                return False
+            if self.task.run(["TKSNUU FKXYPUGQ 855146", "TKSNUU FKXYPUGQ 930060", "TKSNUU FKXYPUGQ 886973", "TKSNUU FKXYPUGQ 59344", "TKSNUU FKXYPUGQ 296343", "TKSNUU FKXYPUGQ 193166", "TKSNUU FKXYPUGQ 855146"]) != self.check_sales(["TKSNUU FKXYPUGQ 855146", "TKSNUU FKXYPUGQ 930060", "TKSNUU FKXYPUGQ 886973", "TKSNUU FKXYPUGQ 59344", "TKSNUU FKXYPUGQ 296343", "TKSNUU FKXYPUGQ 193166", "TKSNUU FKXYPUGQ 855146"]):
+                return False
             return True
 
     # call func
@@ -173,6 +196,10 @@ class TaskChecker:
             self.data_cards_fill()
         if self.task.name == "most_freq":
             self.lines_gen()
+        if self.task.name == "freq_check":
+            self.data_gen_freq_check()
+        if self.task.name == "sales":
+            self.data_gen_sales()
         start = time.time()
         # core
         if self.task.name == "sum":
@@ -200,11 +227,10 @@ class TaskChecker:
                 print(f"bench {i}/1000")
         if self.task.name == "freq_check":
             for i in range(100):
-                self.task.run(10000, self.data_freq_check())
+                self.task.run(len(self.data_freq_check), self.data_freq_check)
                 print(f"bench {i}/100")
         if self.task.name == "sales":
             for i in range(100):
-                self.task.run()
+                self.task.run(self.data_sales)
                 print(f"bench {i}/100")
-            pass
         return time.time() - start

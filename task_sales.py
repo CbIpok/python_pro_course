@@ -8,8 +8,9 @@ class TaskSales:
         for line in data:
             client, thing, value = line.split()
             clients[client][thing] += int(value)
-
+        ans = []
         for client in sorted(clients):
-            print(client + ':')
+            ans.append(str(client + ':'))
             for thing in sorted(clients[client]):
-                print(thing, clients[client][thing])
+                ans.append(str(thing) + " " + str(clients[client][thing]))
+        return ans
