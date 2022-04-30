@@ -9,3 +9,4 @@ class TaskLostCard:
         for i in range(1, N):
             if a[i - 1] != i:
                 return i
+        return N

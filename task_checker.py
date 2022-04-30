@@ -106,9 +106,16 @@ class TaskChecker:
                         return False
             return True
         if self.task.name == "card":
-            for case in self.data_cards:
-                if self.task.run(case[0], case[1]) != case[2]:
-                    return False
+            if self.task.run(5, [1, 2, 3, 4]) != 5:
+                return False
+            if self.task.run(5, [3, 5, 2, 1]) != 4:
+                return False
+            if self.task.run(1, []) != 1:
+                return False
+            if self.task.run(30, [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]) != 5:
+                return False
+            if self.task.run(10, [4, 1, 7, 8, 3, 5, 9, 10, 6]) != 2:
+                return False
             return True
         if self.task.name == "fact_sum":
             if self.task.run(1000) != sum([factorial(x) for x in range(1, 1000 + 1)]):
@@ -183,8 +190,6 @@ class TaskChecker:
 
     # call func
     def run(self):
-        if self.task.name == "card":
-            self.data_cards_fill()
         if self.task_check():
             print("Passed")
         else:
