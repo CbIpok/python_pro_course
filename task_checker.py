@@ -37,9 +37,6 @@ class TaskChecker:
             output.append("ai ai ai ai ai ai ai ai ai oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf ai ai ai ai ai ai ai ai ai oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf ai ai ai ai ai ai ai ai ai oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf ai ai ai ai ai ai ai ai ai oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf ai ai ai ai ai ai ai ai ai oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf ai ai ai ai ai ai ai ai ai oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf dfgqwe asdfsdfg asd qwe rsdf aasd sf dfasdkqwoe asasdasd aiaiai ai ai ai oi oi oi oi oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd ai ai ai oi oi oi oi oi oi oi oi oi oi oi ")
         self.data_freq_check = output
 
-    def sale(self):
-        pass
-
     def fibb_cycle(self, n):
         a = 0
         b = 1
@@ -64,8 +61,6 @@ class TaskChecker:
         steps = 1000
         for i in range(steps):
             self.data_cards.append(self.data_cards_gen())
-            print(f"card generation {i}/1000")
-        print("done")
 
     def freq_check_ans(self, n, data):
         words = []
@@ -94,8 +89,6 @@ class TaskChecker:
             for j in range(1, random.randint(50000, 70000)):
                 line = line + str(random.randint(10, 20))
             self.data_most_freq[i] = line
-            print(f"lines generation {i}/200")
-        print("done")
 
     # check func
     def task_check(self):
@@ -212,30 +205,23 @@ class TaskChecker:
                 for j in range(-50000, 50000):
                     if self.task.run(i, j) != i + j:
                         break
-                print(f"bench {i + 1000}/2000")
         if self.task.name == "card":
             for i in range(100):
                 for case in self.data_cards:
                     self.task.run(case[0], case[1])
-                print(f"bench {i}/100")
         if self.task.name == "fact_sum":
             for i in range(100):
                 self.task.run(3000)
-                print(f"bench {i}/100")
         if self.task.name == "fibb":
             for i in range(100):
                 self.task.run(200000)
-                print(f"bench {i}/100")
         if self.task.name == "most_freq":
             for i in range(1000):
                 self.task.run(len(self.data_most_freq), self.data_most_freq)
-                print(f"bench {i}/1000")
         if self.task.name == "freq_check":
             for i in range(100):
                 self.task.run(len(self.data_freq_check), self.data_freq_check)
-                print(f"bench {i}/100")
         if self.task.name == "sales":
             for i in range(100):
                 self.task.run(self.data_sales)
-                print(f"bench {i}/100")
         return time.time() - start
