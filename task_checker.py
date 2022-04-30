@@ -1,6 +1,9 @@
 import random
 from math import factorial
 import time
+from collections import Counter
+from collections import defaultdict
+from sys import stdin
 
 
 class TaskChecker:
@@ -10,6 +13,16 @@ class TaskChecker:
         self.data_most_freq = []
 
     # pregen func
+    def data_freq_check(self):
+        output = []
+        for i in range(10000):
+            output.append(
+                "ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf dfgqwe asdfsdfg asd qwe rsdf aasd sf dfasdkqwoe asasdasd aiaiai ai ai ai oi oi oi oi oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf dfgqwe asdfsdfg asd qwe rsdf aasd sf dfasdkqwoe asasdasd aiaiai ai ai ai oi oi oi oi oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf dfgqwe asdfsdfg asd qwe rsdf aasd sf dfasdkqwoe asasdasd aiaiai ai ai ai oi oi oi oi oi oi oi oi oi oi oi ai ai ai ai ai ai ai ai ai oi oi oi oi das asd asd qwe sdf adsd zxc qwedf dfgqwe asdfsdfg asd qwe rsdf aasd sf dfasdkqwoe asasdasd aiaiai ai ai ai oi oi oi oi oi oi oi oi oi oi oi ")
+        return output
+
+    def sale(self):
+        pass
+
     def fibb_cycle(self, n):
         a = 0
         b = 1
@@ -36,6 +49,16 @@ class TaskChecker:
             self.data_cards.append(self.data_cards_gen())
             print(f"card generation {i}/1000")
         print("done")
+
+    def freq_check_ans(self, n, data):
+        words = []
+        result = []
+        for _ in range(n):
+            words.extend(data[_].split())
+        counter = Counter(words)
+        pairs = [(-pair[1], pair[0]) for pair in counter.most_common()]
+        words = [pair[1] for pair in sorted(pairs)]
+        return words
 
     def most_freq_check(self, n, cartage):
         counter = {}
@@ -95,8 +118,44 @@ class TaskChecker:
                 return False
             if self.task.run(3, ["q w e r t y u i o p", "a s d f g h j k l", "z x c v b n m"]) != "a":
                 return False
-            if self.task.run(1, ["Death there mirth way the noisy merit. Piqued shy spring nor six though mutual living ask extent. Replying of dashwood advanced ladyship smallest disposal or. Attempt offices own improve now see. Called person are around county talked her esteem. Those fully these way nay thing seems."]) != self.most_freq_check(1, ["Death there mirth way the noisy merit. Piqued shy spring nor six though mutual living ask extent. Replying of dashwood advanced ladyship smallest disposal or. Attempt offices own improve now see. Called person are around county talked her esteem. Those fully these way nay thing seems."]):
+            if self.task.run(1, [
+                "Death there mirth way the noisy merit. Piqued shy spring nor six though mutual living ask extent. Replying of dashwood advanced ladyship smallest disposal or. Attempt offices own improve now see. Called person are around county talked her esteem. Those fully these way nay thing seems."]) != self.most_freq_check(
+                    1, [
+                        "Death there mirth way the noisy merit. Piqued shy spring nor six though mutual living ask extent. Replying of dashwood advanced ladyship smallest disposal or. Attempt offices own improve now see. Called person are around county talked her esteem. Those fully these way nay thing seems."]):
                 return False
+            return True
+        if self.task.name == "freq_check":
+            if self.task.run(3, ["hi", "hi", "what is your name"]) != self.freq_check_ans(3, ["hi", "hi",
+                                                                                              "what is your name"]):
+                return False
+            if self.task.run(1, ["ai ai ai ai ai ai ai ai ai ai ai ai"]) != self.freq_check_ans(1, [
+                "ai ai ai ai ai ai ai ai ai ai ai ai"]):
+                return False
+            if self.task.run(14, ["That thou hast her it is not all my grief,",
+                                  "And yet it may be said I loved her dearly,",
+                                  "That she hath thee is of my wailing chief,",
+                                  "A loss in love that touches me more nearly.",
+                                  "Loving offenders thus I will excuse ye,",
+                                  "Thou dost love her, because thou know'st I love her,",
+                                  "And for my sake even so doth she abuse me,",
+                                  "Suff'ring my friend for my sake to approve her.",
+                                  "If I lose thee, my loss is my love's gain,",
+                                  "And losing her, my friend hath found that loss,",
+                                  "Both find each other, and I lose both twain,",
+                                  "And both for my sake lay on me this cross,",
+                                  "But here's the joy, my friend and I are one,",
+                                  "Sweet flattery, then she loves but me alone."]) != self.freq_check_ans(14, [
+                "That thou hast her it is not all my grief,", "And yet it may be said I loved her dearly,",
+                "That she hath thee is of my wailing chief,", "A loss in love that touches me more nearly.",
+                "Loving offenders thus I will excuse ye,", "Thou dost love her, because thou know'st I love her,",
+                "And for my sake even so doth she abuse me,", "Suff'ring my friend for my sake to approve her.",
+                "If I lose thee, my loss is my love's gain,", "And losing her, my friend hath found that loss,",
+                "Both find each other, and I lose both twain,", "And both for my sake lay on me this cross,",
+                "But here's the joy, my friend and I are one,", "Sweet flattery, then she loves but me alone."]):
+                return False
+            return True
+        if self.task.name == "sales":
+            
             return True
 
     # call func
@@ -139,8 +198,12 @@ class TaskChecker:
             for i in range(1000):
                 self.task.run(len(self.data_most_freq), self.data_most_freq)
                 print(f"bench {i}/1000")
-        if self.task.name == "most_freq":
-            pass
-        if self.task.name == "most_freq":
+        if self.task.name == "freq_check":
+            for i in range(100):
+                self.task.run(10000, self.data_freq_check())
+                print(f"bench {i}/100")
+        if self.task.name == "sales":
+            for i in range(10000):
+                self.task.run()
             pass
         return time.time() - start
